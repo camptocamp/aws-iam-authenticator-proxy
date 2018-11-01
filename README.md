@@ -1,6 +1,9 @@
 aws-iam-authenticator HTTP Proxy
 ================================
 
+[![Docker Pulls](https://img.shields.io/docker/pulls/camptocamp/aws-iam-authenticator-proxy.svg)](https://hub.docker.com/r/camptocamp/aws-iam-authenticator-proxy/)
+[![Go Report Card](https://goreportcard.com/badge/github.com/camptocamp/aws-iam-authenticator-proxy)](https://goreportcard.com/report/github.com/camptocamp/aws-iam-authenticator-proxy)
+[![By Camptocamp](https://img.shields.io/badge/by-camptocamp-fb7047.svg)](http://www.camptocamp.com)
 
 Amazon Services require valid accounts to be used. This proxy allows external
 users to access an AWS EKS cluster without requiring access to AWS credentials.
