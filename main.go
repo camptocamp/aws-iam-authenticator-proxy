@@ -33,6 +33,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%v\n", gen.FormatJSON(tok))
 }
 
+func healthHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Everything running smooth")
+}
+
 func init() {
 	var err error
 	gen, err = token.NewGenerator(false, false)
@@ -50,6 +54,7 @@ func init() {
 
 func main() {
 	http.HandleFunc("/", handler)
+	http.HandleFunc("/healthz", healthHandler)
 	log.Infof("aws-iam-authenticator-proxy v%s starting on port 8080", version)
 	http.ListenAndServe(":8080", nil)
 }
