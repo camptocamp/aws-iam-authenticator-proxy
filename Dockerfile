@@ -1,7 +1,7 @@
 FROM golang:1.15 as builder
 WORKDIR /
 COPY . .
-RUN CGO_ENABLED=1 GOOS=linux go build -ldflags "-linkmode external -extldflags -static" -o /aws-iam-authenticator
+RUN make build
 
 
 FROM scratch
