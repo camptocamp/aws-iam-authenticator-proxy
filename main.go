@@ -33,7 +33,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func init() {
 	var err error
-	gen, err = token.NewGenerator(false)
+	gen, err = token.NewGenerator(false, false)
 	if err != nil {
 		log.Fatalf("Failed to start service: %v", err)
 	}
