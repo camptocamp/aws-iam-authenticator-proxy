@@ -5,19 +5,27 @@ import (
 	"net/http"
 	"os"
 
-	log "github.com/Sirupsen/logrus"
-	"github.com/kubernetes-sigs/aws-iam-authenticator/pkg/token"
+	log "github.com/sirupsen/logrus"
+	"sigs.k8s.io/aws-iam-authenticator/pkg/token"
 )
 
 var gen token.Generator
 var clusterID string
+var psk string
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	var tok token.Token
 	var err error
+
+	values := r.URL.Query()
+	if values.Get("psk") != psk {
+		http.Error(w, "wrong psk", http.StatusForbidden)
+		return
+	}
+
 	tok, err = gen.Get(clusterID)
 	if err != nil {
-		fmt.Fprintf(w, "Failed to retrieve token: %v", err)
+		http.Error(w, "failed to retrieve token", http.StatusServiceUnavailable)
 	}
 	log.Printf("Got token %v", gen.FormatJSON(tok))
 	fmt.Fprintf(w, "%v\n", gen.FormatJSON(tok))
@@ -25,7 +33,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func init() {
 	var err error
-	gen, err = token.NewGenerator(false)
+	gen, err = token.NewGenerator(false, false)
 	if err != nil {
 		log.Fatalf("Failed to start service: %v", err)
 	}
@@ -34,6 +42,8 @@ func init() {
 	if clusterID == "" {
 		log.Fatal("EKS_CLUSTER_ID must be set")
 	}
+
+	psk = os.Getenv("PSK")
 }
 
 func main() {

@@ -23,11 +23,14 @@ $ docker run --rm -p 8080:8080 \
              -e AWS_ACCESS_KEY_ID=<AWS_ACCESS_KEY_ID> \
              -e AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY> \
              -e EKS_CLUSTER_ID=<EKS_CLUSTER_ID> \
+             -e PSK="mysecretstring" \
     camptocamp/aws-iam-authenticator-proxy:latest
 ```
 
 You should then be able to retrieve authentication tokens for your user at
 http://localhost:8080.
+
+If a PSK is passed, you will need to pass its value in the URL as http://localhost:8080?psk=mysecretstring.
 
 You can set up your `~/.kube/config` to use the `exec` authentication mechanism
 using `curl`:
