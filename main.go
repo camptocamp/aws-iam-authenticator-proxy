@@ -17,12 +17,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	var tok token.Token
 	var err error
 
-	if psk != "" {
-		values := r.URL.Query()
-		if values["psk"] != psk {
-			http.Error(w, "wrong psk", http.StatusForbidden)
-			return
-		}
+	values := r.URL.Query()
+	if values.Get("psk") != psk {
+		http.Error(w, "wrong psk", http.StatusForbidden)
+		return
 	}
 
 	tok, err = gen.Get(clusterID)
