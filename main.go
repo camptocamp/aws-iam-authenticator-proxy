@@ -11,13 +11,23 @@ import (
 
 var gen token.Generator
 var clusterID string
+var psk string
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	var tok token.Token
 	var err error
+
+	if psk != "" {
+		values := r.URL.Query()
+		if values["psk"] != psk {
+			http.Error(w, "wrong psk", http.StatusForbidden)
+			return
+		}
+	}
+
 	tok, err = gen.Get(clusterID)
 	if err != nil {
-		fmt.Fprintf(w, "Failed to retrieve token: %v", err)
+		http.Error(w, "failed to retrieve token", http.StatusServiceUnavailable)
 	}
 	log.Printf("Got token %v", gen.FormatJSON(tok))
 	fmt.Fprintf(w, "%v\n", gen.FormatJSON(tok))
@@ -34,6 +44,8 @@ func init() {
 	if clusterID == "" {
 		log.Fatal("EKS_CLUSTER_ID must be set")
 	}
+
+	psk = os.Getenv("PSK")
 }
 
 func main() {
