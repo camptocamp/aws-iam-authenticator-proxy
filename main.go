@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"os"
 
-	log "github.com/Sirupsen/logrus"
-	"github.com/kubernetes-sigs/aws-iam-authenticator/pkg/token"
+	log "github.com/sirupsen/logrus"
+	"sigs.k8s.io/aws-iam-authenticator/pkg/token"
 )
 
 var gen token.Generator
