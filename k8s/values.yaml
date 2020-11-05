@@ -3,6 +3,7 @@
 # Declare variables to be passed into your templates.
 
 eks_cluster_id: ""
+psk: ""
 aws:
   access_key_id: ""
   secret_access_key: ""
