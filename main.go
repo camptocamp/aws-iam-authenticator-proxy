@@ -55,6 +55,6 @@ func init() {
 func main() {
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/healthz", healthHandler)
-	log.Infof("aws-iam-authenticator-proxy v%s starting on port 8080", version)
+	log.Infof("aws-iam-authenticator-proxy %s starting on port 8080", version)
 	http.ListenAndServe(":8080", nil)
 }
