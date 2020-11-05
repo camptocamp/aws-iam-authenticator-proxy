@@ -12,6 +12,7 @@ import (
 var gen token.Generator
 var clusterID string
 var psk string
+var version = "undefined"
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	var tok token.Token
@@ -49,6 +50,6 @@ func init() {
 
 func main() {
 	http.HandleFunc("/", handler)
-	log.Info("Listening on port 8080")
+	log.Infof("aws-iam-authenticator-proxy v%s starting on port 8080", version)
 	http.ListenAndServe(":8080", nil)
 }
