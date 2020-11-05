@@ -26,6 +26,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	tok, err = gen.Get(clusterID)
 	if err != nil {
 		http.Error(w, "failed to retrieve token", http.StatusServiceUnavailable)
+		return
 	}
 	log.Printf("Got token %v", gen.FormatJSON(tok))
 	fmt.Fprintf(w, "%v\n", gen.FormatJSON(tok))
