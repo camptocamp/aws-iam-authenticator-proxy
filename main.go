@@ -22,17 +22,17 @@ var version = "undefined"
 var metrics = map[string]*metric{
 	"aws_iam_authenticator_proxy:tokens:total_requested": &metric{
 		"Total number of token requested",
-		"gauge",
+		"counter",
 		0,
 	},
 	"aws_iam_authenticator_proxy:tokens:total_delivered": &metric{
 		"Total number of token delivered",
-		"gauge",
+		"counter",
 		0,
 	},
 	"aws_iam_authenticator_proxy:tokens:total_errors": &metric{
 		"Total number of token errored",
-		"gauge",
+		"counter",
 		0,
 	},
 }
