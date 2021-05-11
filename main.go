@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 
 	log "github.com/sirupsen/logrus"
 	"sigs.k8s.io/aws-iam-authenticator/pkg/token"
@@ -18,6 +19,7 @@ type metric struct {
 var gen token.Generator
 var clusterID string
 var psk string
+var wrongPskSleep = time.Second
 var version = "undefined"
 var metrics = map[string]*metric{
 	"aws_iam_authenticator_proxy:tokens:total_requested": &metric{
@@ -45,6 +47,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	values := r.URL.Query()
 	if values.Get("psk") != psk {
 		metrics["aws_iam_authenticator_proxy:tokens:total_errors"].Value += 1
+		time.Sleep(wrongPskSleep)
 		http.Error(w, "wrong psk", http.StatusForbidden)
 		return
 	}
