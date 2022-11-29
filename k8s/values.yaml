@@ -11,7 +11,7 @@ aws:
 replicaCount: 1
 
 image:
-  repository: camptocamp/aws-iam-authenticator-proxy
+  repository: ghcr.io/camptocamp/aws-iam-authenticator-proxy
   tag: latest
   pullPolicy: Always
 
