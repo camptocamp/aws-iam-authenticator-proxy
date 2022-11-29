@@ -1,0 +1,29 @@
+---
+name: Build AWS IAM Authenticator Proxy images
+
+on:
+  schedule:
+    - cron: "* * 5 * *"
+  push:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: camptocamp/initialise-gopass-summon-action@v2
+      with:
+        ci-gpg-private-key: ${{secrets.CI_GPG_PRIVATE_KEY}}
+        github-gopass-ci-token: ${{secrets.GOPASS_CI_GITHUB_TOKEN}}
+        patterns: docker
+
+    - name: "Build images"
+      run: |
+        docker build -t camptocamp/aws-iam-authenticator-proxy:latest .
+        docker push camptocamp/aws-iam-authenticator-proxy:latest
+        docker tag camptocamp/aws-iam-authenticator-proxy:latest ghcr.io/camptocamp/aws-iam-authenticator-proxy:latest
+        docker push ghcr.io/camptocamp/aws-iam-authenticator-proxy:latest
