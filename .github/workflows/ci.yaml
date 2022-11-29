@@ -23,7 +23,5 @@ jobs:
 
     - name: "Build images"
       run: |
-        docker build -t camptocamp/aws-iam-authenticator-proxy:latest .
-        docker push camptocamp/aws-iam-authenticator-proxy:latest
-        docker tag camptocamp/aws-iam-authenticator-proxy:latest ghcr.io/camptocamp/aws-iam-authenticator-proxy:latest
+        docker build -t ghcr.io/camptocamp/aws-iam-authenticator-proxy:latest .
         docker push ghcr.io/camptocamp/aws-iam-authenticator-proxy:latest
